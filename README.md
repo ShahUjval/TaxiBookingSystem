@@ -41,9 +41,7 @@ API Documentation
 
 There is swagger integrated to help you easier navigate through all exposed restful api
 
-```cmd
 https://taxibookingapi.azurewebsites.net
-```
 
 More Information
 -------------------
