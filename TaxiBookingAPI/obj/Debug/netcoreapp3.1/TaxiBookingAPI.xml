@@ -1,0 +1,209 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>TaxiBookingAPI</name>
+    </assembly>
+    <members>
+        <member name="T:TaxiBookingAPI.Controllers.TaxiBookingController">
+            <summary>
+            Taxi Booking Controller , Which exposes three Rest End points
+            POST api/book
+            POST api/tick
+            PUT api/reset
+            </summary>
+        </member>
+        <member name="M:TaxiBookingAPI.Controllers.TaxiBookingController.#ctor(Microsoft.Extensions.Logging.ILogger{TaxiBookingAPI.Controllers.TaxiBookingController},TaxiBookingAPI.Interfaces.ITaxiBookingService)">
+            <summary>
+            Taxi Booking Controller Constructor
+            </summary>
+            <param name="logger"></param>
+            <param name="taxiBookingService"></param>
+        </member>
+        <member name="M:TaxiBookingAPI.Controllers.TaxiBookingController.PostBookTaxi(TaxiBookingAPI.Model.Location)">
+             <summary>
+             POST /api/book - returns the nearest available car to the customer location
+             and returns the total time taken to travel
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 POST /api/book
+                 {
+                     "source": {
+                         "x": x1,
+                         "y": y1
+                        },
+                    "destination": {
+                         "x": x2,
+                         "y": y2
+                        }
+                  }
+            
+             Sample response:    
+            
+                     {
+                         "car_id": id,
+                         "total_time": t
+                     }
+             </remarks>
+            
+             <returns>A newly created resource</returns>
+             <response code="201">Returns the car_id with total_time</response>
+             <response code="400">If the item is null</response>    
+             <param name="location"></param>
+             <returns></returns>
+        </member>
+        <member name="M:TaxiBookingAPI.Controllers.TaxiBookingController.PostTick">
+            <summary>
+            /api/tick REST endpoint,  advances your service time stamp by 1 time unit
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TaxiBookingAPI.Controllers.TaxiBookingController.Reset">
+            <summary>
+             /api/reset REST endpoint, will reset all cars data back to the initial state
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:TaxiBookingAPI.Interfaces.ITaxiBookingService">
+            <summary>
+            Interface for the Taxi Booking Service API
+            </summary>
+        </member>
+        <member name="M:TaxiBookingAPI.Interfaces.ITaxiBookingService.ResetTaxiBookingSystem">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TaxiBookingAPI.Interfaces.ITaxiBookingService.IncrementServiceTimeStamp">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TaxiBookingAPI.Interfaces.ITaxiBookingService.BookTaxi(TaxiBookingAPI.Model.Location)">
+            <summary>
+            
+            </summary>
+            <param name="location"></param>
+            <returns></returns>
+        </member>
+        <member name="T:TaxiBookingAPI.Model.Location">
+            <summary>
+            Location Model for the JSON 
+            </summary>
+        </member>
+        <member name="P:TaxiBookingAPI.Model.Location.Source">
+            <summary>
+            Passenger's initial Position
+            </summary>
+        </member>
+        <member name="P:TaxiBookingAPI.Model.Location.Destination">
+            <summary>
+            Passenger's destination Position
+            </summary>
+        </member>
+        <member name="T:TaxiBookingAPI.Model.LocationCoordinates">
+            <summary>
+            Location Coordinates X,Y
+            </summary>
+        </member>
+        <member name="P:TaxiBookingAPI.Model.LocationCoordinates.X">
+            <summary>
+             X coordinate of the Location
+            </summary>
+        </member>
+        <member name="P:TaxiBookingAPI.Model.LocationCoordinates.Y">
+            <summary>
+            Y coordinate of the Location
+            </summary>
+        </member>
+        <member name="T:TaxiBookingAPI.Model.Taxi">
+            <summary>
+             In Memory Model for the Taxi , Which Holds the three taxi details
+            </summary>
+        </member>
+        <member name="P:TaxiBookingAPI.Model.Taxi.CarId">
+            <summary>
+             car id either 1 , 2 , 3
+            </summary>
+        </member>
+        <member name="P:TaxiBookingAPI.Model.Taxi.Location">
+            <summary>
+             current location of the car
+            </summary>
+        </member>
+        <member name="P:TaxiBookingAPI.Model.Taxi.IsBooked">
+            <summary>
+             Is car already booked
+            </summary>
+        </member>
+        <member name="P:TaxiBookingAPI.Model.Taxi.BookedUntilTime">
+            <summary>
+             if c ar is booked , BookedUntilTime will tell you until what time it is booked
+            </summary>
+        </member>
+        <member name="T:TaxiBookingAPI.TaxiBookingModule.TaxiBookingService">
+            <summary>
+            Taxi Booking Service
+            </summary>
+        </member>
+        <member name="F:TaxiBookingAPI.TaxiBookingModule.TaxiBookingService._serviceTimeStamp">
+            <summary>
+            Service Time Stamp
+            </summary>
+        </member>
+        <member name="F:TaxiBookingAPI.TaxiBookingModule.TaxiBookingService.TAXI_COUNT">
+            <summary>
+             Taxi Count : 3
+            </summary>
+        </member>
+        <member name="F:TaxiBookingAPI.TaxiBookingModule.TaxiBookingService.taxis">
+            <summary>
+            collection of taxis with all the information
+            </summary>
+        </member>
+        <member name="M:TaxiBookingAPI.TaxiBookingModule.TaxiBookingService.#ctor">
+            <summary>
+             TaxiBookingService Constructor
+            </summary>
+        </member>
+        <member name="M:TaxiBookingAPI.TaxiBookingModule.TaxiBookingService.InitialiseOrReset">
+            <summary>
+             Initialise Or Reset 
+            </summary>
+        </member>
+        <member name="M:TaxiBookingAPI.TaxiBookingModule.TaxiBookingService.ResetTaxiBookingSystem">
+            <summary>
+            Reset taxi Booking System
+            </summary>
+        </member>
+        <member name="M:TaxiBookingAPI.TaxiBookingModule.TaxiBookingService.IncrementServiceTimeStamp">
+            <summary>
+             Increment Service Time Stamp
+            </summary>
+        </member>
+        <member name="M:TaxiBookingAPI.TaxiBookingModule.TaxiBookingService.BookTaxi(TaxiBookingAPI.Model.Location)">
+            <summary>
+             Main Method which Books a Taxi
+            </summary>
+        </member>
+        <member name="M:TaxiBookingAPI.TaxiBookingModule.TaxiBookingService.TimeTakenFromXtoY(TaxiBookingAPI.Model.LocationCoordinates,TaxiBookingAPI.Model.LocationCoordinates)">
+            <summary>
+            Calculates the Manhattan distance between two points
+             x = (a,b)  and   y = (c,d)
+             Manhattan Distance is calculated  = |a - c| + |b - d| 
+            </summary>
+            <param name="locationSource">Source Location</param>
+            <param name="locationDestination">Destination Location</param>
+            <returns></returns>
+        </member>
+        <member name="M:TaxiBookingAPI.TaxiBookingModule.TaxiBookingService.FindNearestTaxiToCustomer(TaxiBookingAPI.Model.LocationCoordinates)">
+            <summary>
+             This Function returns the nearest taxi with the smallest id , given the customer's current position and the
+             position of all taxi cars that are available
+            </summary>
+            <param name="locationSource"> location source of the Customer's Current location</param>
+            <returns>nearest car_id with total time required to reach to customer</returns>
+        </member>
+    </members>
+</doc>
